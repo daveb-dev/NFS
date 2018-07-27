@@ -1,0 +1,2 @@
+app_name = nfs
+cli_args = '--error'
