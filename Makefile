@@ -39,7 +39,7 @@ SOLID_MECHANICS     := no
 STOCHASTIC_TOOLS    := no
 TENSOR_MECHANICS    := no
 WATER_STEAM_EOS     := no
-XFEM                := no
+XFEM                := yes
 POROUS_FLOW         := no
 
 include $(MOOSE_DIR)/modules/modules.mk

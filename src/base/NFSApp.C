@@ -4,6 +4,8 @@
 #include "ModulesApp.h"
 #include "MooseSyntax.h"
 
+#include "XFEMWeibullMaterial.h"
+
 template <>
 InputParameters
 validParams<NFSApp>()
@@ -32,9 +34,10 @@ NFSApp::registerApps()
 }
 
 void
-NFSApp::registerObjects(Factory & /*factory*/)
+NFSApp::registerObjects(Factory & factory)
 {
-  /* Uncomment Factory parameter and register your new production objects here! */
+	//Materials
+	registerMaterial(XFEMWeibullMaterial);
 }
 
 void
