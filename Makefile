@@ -3,8 +3,8 @@
 ###############################################################################
 #
 # Optional Environment variables
-# MOOSE_DIR        - Root directory of the MOOSE project 
-#
+# MOOSE_DIR        - Root directory of the MOOSE project
+MOOSE_DIR	:= $(subst $(notdir $(CURDIR)),,$(CURDIR))moose_fracture
 ###############################################################################
 # Use the MOOSE submodule if it exists and MOOSE_DIR is not set
 MOOSE_SUBMODULE    := $(CURDIR)/moose
@@ -44,6 +44,13 @@ POROUS_FLOW         := no
 
 include $(MOOSE_DIR)/modules/modules.mk
 ###############################################################################
+# BISON
+BISON_F_DIR          ?= $(shell dirname `pwd`)/bison_fracture
+ifneq ($(wildcard $(BISON_F_DIR)/Makefile),)
+  APPLICATION_DIR    := $(BISON_F_DIR)
+  APPLICATION_NAME   := bison_fracture
+  include            $(FRAMEWORK_DIR)/app.mk
+endif
 
 # dep apps
 APPLICATION_DIR    := $(CURDIR)

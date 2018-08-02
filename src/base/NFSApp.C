@@ -36,7 +36,7 @@ NFSApp::registerApps()
 void
 NFSApp::registerObjects(Factory & factory)
 {
-  registerMaterial(XFEMWeibullMaterial);
+ // registerMaterial(XFEMWeibullMaterial);
   /* Uncomment Factory parameter and register your new production objects here! */
 }
 
