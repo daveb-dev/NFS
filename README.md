@@ -7,7 +7,7 @@ For more information see: [http://mooseframework.org/create-an-app/](http://moos
 
 #### NFS is a development app specific designed for fracture related simulation in nuclear related materials. It used a specific version of MOOSE and BISON(export controlled) for specific dependency related.
 <br/>
-##### Make sure that the moose directory is named `./moose_fracture`
+#### Make sure that the moose directory is named `./moose_fracture`
 
 ###### To compile **NFS**:
 `make`
