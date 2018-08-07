@@ -1,0 +1,7 @@
+[Tests]
+  [./simple_heatconduction_tran]
+    type = 'Exodiff'
+    input = 'heatconduct_basic.i'
+    exodiff = 'heatconduct_basic_out.e'
+  [../]
+[]
