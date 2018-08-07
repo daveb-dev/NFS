@@ -1,7 +1,3 @@
-#[Mesh]
-  #file = '2d_2pi_2_fix2.e'
-#[]
-
 [Mesh]
   type = GeneratedMesh
   dim = 2
