@@ -1,7 +1,13 @@
 [Tests]
-  [./test]
+  [./simple_diff]
     type = 'Exodiff'
     input = 'simple_diffusion.i'
     exodiff = 'simple_diffusion_out.e'
+  [../]
+
+  [./simple_tran]
+    type = 'Exodiff'
+    input = 'tran_heat_conduction.i'
+    exodiff = 'tran_heat_conduction_out.e'
   [../]
 []
