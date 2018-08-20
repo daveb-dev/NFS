@@ -26,6 +26,8 @@
 
 [AuxVariables]
   [./Wei_strength]
+    order = FIRST
+    family = LAGRANGE
   [../]
 []
 
@@ -34,7 +36,7 @@
   [./Wei_Aux]
     type = MaterialRealAux
     property = "WeibullMat"
-    variable = Wei_strength
+    variable = "Wei_strength"
   [../]
 []
 
@@ -63,7 +65,7 @@
 []
 
 [Materials]
-  [./WeibullMat]
+  [./property]
     block = 0
     type = XFEMWeibullMaterial
     weibull_modulus = 10
