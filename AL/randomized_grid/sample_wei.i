@@ -24,6 +24,20 @@
   [../]
 []
 
+[AuxVariables]
+  [./Wei_strength]
+  [../]
+[]
+
+
+[AuxKernels]
+  [./Wei_Aux]
+    type = MaterialRealAux
+    property = "WeibullMat"
+    variable = Wei_strength
+  [../]
+[]
+
 [Kernels]
   [./diff]
   type = Diffusion
@@ -58,10 +72,6 @@
   [../]
 []
 
-[Postprocessors]
-  [./VectorPostprocessors]
-  
-[]
 
 [Executioner]
   type = Transient
