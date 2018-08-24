@@ -1,10 +1,12 @@
 #include "NFSApp.h"
 #include "Moose.h"
+#include "BisonApp.h"
+#include "BisonHeader.h"
+#include "BisonSyntax.h"
 #include "AppFactory.h"
 #include "ModulesApp.h"
 #include "MooseSyntax.h"
 
-#include "XFEMWeibullMaterial.h"
 
 template <>
 InputParameters
@@ -23,6 +25,10 @@ NFSApp::NFSApp(InputParameters parameters) : MooseApp(parameters)
   Moose::associateSyntax(_syntax, _action_factory);
   ModulesApp::associateSyntax(_syntax, _action_factory);
   NFSApp::associateSyntax(_syntax, _action_factory);
+
+  // BisonApp
+  BisonApp::registerObjects(_factory);
+  BisonApp::associateSyntax(_syntax, _action_factory);
 }
 
 NFSApp::~NFSApp() {}
@@ -34,7 +40,7 @@ NFSApp::registerApps()
 }
 
 void
-NFSApp::registerObjects(Factory & factory)
+NFSApp::registerObjects(Factory & /*factory*/)
 {
  // registerMaterial(XFEMWeibullMaterial);
   /* Uncomment Factory parameter and register your new production objects here! */
