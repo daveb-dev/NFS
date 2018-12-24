@@ -1,115 +1,60 @@
 [Mesh]
-  file = reactor.e
-  # Let's assign human friendly names to the blocks on the fly
-  block_id = '1 2'
-  block_name = 'fuel deflector'
-
-  boundary_id = '4 5'
-  boundary_name = 'bottom top'
+  file = square.e
+  uniform_refine = 4
 []
 
 [Variables]
+
   [./diffused]
     order = FIRST
     family = LAGRANGE
-    initial_condition = 0.5 # shortcut/convenience for setting constant initial condition
-  [../]
-
-  [./convected]
-    order = FIRST
-    family = LAGRANGE
-    initial_condition = 0.0 # shortcut/convenience for setting constant initial condition
   [../]
 []
 
 [Kernels]
-  # This Kernel consumes a real-gradient material property from the active material
-  [./convection]
-    type = ExampleConvection
-    variable = convected
+
+  [./diffused_ie]
+    type = TimeDerivative
+    variable = diffused
   [../]
 
-  [./diff_convected]
+  [./diff]
     type = Diffusion
-    variable = convected
-  [../]
-
-  [./example_diff]
-    # This Kernel uses "diffusivity" from the active material
-    type = ExampleDiffusion
     variable = diffused
-  [../]
-
-  [./time_deriv_diffused]
-    type = TimeDerivative
-    variable = diffused
-  [../]
-
-  [./time_deriv_convected]
-    type = TimeDerivative
-    variable = convected
   [../]
 []
 
 [BCs]
-  [./bottom_diffused]
+
+  [./left_diffused]
     type = DirichletBC
     variable = diffused
-    boundary = 'bottom'
+    boundary = 'left'
     value = 0
   [../]
 
-  [./top_diffused]
+  [./right_diffused]
     type = DirichletBC
     variable = diffused
-    boundary = 'top'
-    value = 5
-  [../]
-
-  [./bottom_convected]
-    type = DirichletBC
-    variable = convected
-    boundary = 'bottom'
-    value = 0
-  [../]
-
-  [./top_convected]
-    type = NeumannBC
-    variable = convected
-    boundary = 'top'
+    boundary = 'right'
     value = 1
   [../]
+
 []
 
 [Materials]
-  [./example]
+  [./example_material]
     type = ExampleMaterial
-    block = 'fuel'
-    diffusion_gradient = 'diffused'
-
-    # Approximate Parabolic Diffusivity
-    independent_vals = '0 0.25 0.5 0.75 1.0'
-    dependent_vals = '1e-2 5e-3 1e-3 5e-3 1e-2'
-  [../]
-
-  [./example1]
-    type = ExampleMaterial
-    block = 'deflector'
-    diffusion_gradient = 'diffused'
-
-    # Constant Diffusivity
-    independent_vals = '0 1.0'
-    dependent_vals = '1e-1 1e-1'
+    block = 1
+    initial_diffusivity = 0.05
   [../]
 []
 
 [Executioner]
   type = Transient
   solve_type = 'PJFNK'
-  petsc_options_iname = '-pc_type -pc_hypre_type'
-  petsc_options_value = 'hypre boomeramg'
-  dt = 0.1
   num_steps = 10
+  dt = 1.0
 []
 
 [Outputs]
