@@ -7,9 +7,11 @@
 #include "ModulesApp.h"
 #include "MooseSyntax.h"
 
-
+// Kernels
 #include "gap_conduction.h"
 
+// Materials
+#include "ExampleMaterial.h"
 template <>
 InputParameters
 validParams<NFSApp>()
@@ -47,8 +49,14 @@ NFSApp::registerObjects(Factory & factory)
  // registerMaterial(XFEMWeibullMaterial);
   //registerKernel(diffusion2);
   //registerKernel(DarcyPressure);
+
+  //Kernels
   registerKernel(gap_conduction);
-  /* Uncomment Factory parameter and register your new production objects here! */
+
+
+
+  // Materials
+  registerMaterial(ExampleMaterial);
 }
 
 void
