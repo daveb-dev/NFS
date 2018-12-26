@@ -1,8 +1,6 @@
 #include "NFSApp.h"
 #include "Moose.h"
-//#include "../../../bison_fracture/include/base/BisonApp.h"
-//#include "../../../bison_fracture/include/base/BisonHeader.h"
-//#include "BisonSyntax.h"
+
 #include "AppFactory.h"
 #include "ModulesApp.h"
 #include "MooseSyntax.h"
@@ -15,11 +13,11 @@
 
 
 //#ifdef BISON_ENABLED
-  #include "BisonApp.h"
-  #include "BisonSyntax.h"
+#include "BisonApp.h"
+#include "BisonSyntax.h"
 //#endif
 
-
+/* Personal Stuff */
 
 // Kernels
 #include "gap_conduction.h"
@@ -79,7 +77,7 @@ NFSApp::registerObjects(Factory & factory)
   // Materials
   registerMaterial(ExampleMaterial);
 
-  // for bison
+  // Bison Register
 //  #ifdef BISON_ENABLED
     BisonApp::registerObjects(factory);
 //  #endif
@@ -89,8 +87,9 @@ NFSApp::registerObjects(Factory & factory)
   // TensorMechanicsApp::registerObjects(factory);
   // SolidMechanicsApp::registerObjects(factory);
 
+  /* Use Combined to register all objects */
   CombinedApp::registerObjects(factory);
-  //Registry::registerObjectsTo(factory, {"NFSApp"});
+
 }
 
 void
@@ -105,6 +104,7 @@ NFSApp::associateSyntax(Syntax & syntax, ActionFactory & action_factory)
   // XFEMApp::associateSyntax(syntax, action_factory);
   // TensorMechanicsApp::associateSyntax(syntax, action_factory);
   // SolidMechanicsApp::associateSyntax(syntax, action_factory);
+  /* Used combined App to register all of the syntax */
   CombinedApp::associateSyntax(syntax, action_factory);
     //Registry::registerActionsTo(action_factory, {"NFSApp"});
 
