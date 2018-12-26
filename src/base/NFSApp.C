@@ -1,17 +1,26 @@
 #include "NFSApp.h"
 #include "Moose.h"
-#include "BisonApp.h"
-#include "BisonHeader.h"
-#include "BisonSyntax.h"
+//#include "../../../bison_fracture/include/base/BisonApp.h"
+//#include "../../../bison_fracture/include/base/BisonHeader.h"
+//#include "BisonSyntax.h"
 #include "AppFactory.h"
 #include "ModulesApp.h"
 #include "MooseSyntax.h"
+
+#ifdef BISON_ENABLED
+  #include "BisonApp.h"
+  #include "BisonSyntax.h"
+#endif
+
+
 
 // Kernels
 #include "gap_conduction.h"
 
 // Materials
 #include "ExampleMaterial.h"
+
+
 template <>
 InputParameters
 validParams<NFSApp>()
@@ -19,6 +28,9 @@ validParams<NFSApp>()
   InputParameters params = validParams<MooseApp>();
   return params;
 }
+
+registerKnownLabel("NFSApp");
+
 
 NFSApp::NFSApp(InputParameters parameters) : MooseApp(parameters)
 {
@@ -31,8 +43,10 @@ NFSApp::NFSApp(InputParameters parameters) : MooseApp(parameters)
   NFSApp::associateSyntax(_syntax, _action_factory);
 
   // BisonApp
-  BisonApp::registerObjects(_factory);
-  BisonApp::associateSyntax(_syntax, _action_factory);
+  //BisonApp::registerObjects(_factory);
+  //BisonApp::associateSyntax(_syntax, _action_factory);
+  NFSApp::associateSyntax(_syntax, _action_factory);
+
 }
 
 NFSApp::~NFSApp() {}
@@ -57,12 +71,24 @@ NFSApp::registerObjects(Factory & factory)
 
   // Materials
   registerMaterial(ExampleMaterial);
+
+  // for bison
+  #ifdef BISON_ENABLED
+    BisonApp::registerObjects(factory);
+  #endif
+
+  Registry::registerObjectsTo(factory, {"NFSApp"});
 }
 
 void
-NFSApp::associateSyntax(Syntax & /*syntax*/, ActionFactory & /*action_factory*/)
+NFSApp::associateSyntax(Syntax & syntax, ActionFactory & action_factory)
 {
   /* Uncomment Syntax and ActionFactory parameters and register your new production objects here! */
+  #ifdef BISON_ENABLED
+    Bison::associateSyntax(syntax, action_factory);
+  #endif
+    Registry::registerActionsTo(action_factory, {"NFS"});
+
 }
 
 void
