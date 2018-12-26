@@ -6,11 +6,18 @@
 #include "AppFactory.h"
 #include "ModulesApp.h"
 #include "MooseSyntax.h"
+// #include "HeatConductionApp.h"
+// #include "XFEMApp.h"
+// #include "TensorMechanicsApp.h"
+// #include "SolidMechanicsApp.h"
 
-#ifdef BISON_ENABLED
+#include "CombinedApp.h"
+
+
+//#ifdef BISON_ENABLED
   #include "BisonApp.h"
   #include "BisonSyntax.h"
-#endif
+//#endif
 
 
 
@@ -29,7 +36,7 @@ validParams<NFSApp>()
   return params;
 }
 
-registerKnownLabel("NFSApp");
+//registerKnownLabel("NFSApp");
 
 
 NFSApp::NFSApp(InputParameters parameters) : MooseApp(parameters)
@@ -73,21 +80,33 @@ NFSApp::registerObjects(Factory & factory)
   registerMaterial(ExampleMaterial);
 
   // for bison
-  #ifdef BISON_ENABLED
+//  #ifdef BISON_ENABLED
     BisonApp::registerObjects(factory);
-  #endif
+//  #endif
 
-  Registry::registerObjectsTo(factory, {"NFSApp"});
+  // HeatConductionApp::registerObjects(factory);
+  // XFEMApp::registerObjects(factory);
+  // TensorMechanicsApp::registerObjects(factory);
+  // SolidMechanicsApp::registerObjects(factory);
+
+  CombinedApp::registerObjects(factory);
+  //Registry::registerObjectsTo(factory, {"NFSApp"});
 }
 
 void
 NFSApp::associateSyntax(Syntax & syntax, ActionFactory & action_factory)
 {
   /* Uncomment Syntax and ActionFactory parameters and register your new production objects here! */
-  #ifdef BISON_ENABLED
+  //#ifdef BISON_ENABLED
     Bison::associateSyntax(syntax, action_factory);
-  #endif
-    Registry::registerActionsTo(action_factory, {"NFS"});
+  //#endif
+
+  // HeatConductionApp::associateSyntax(syntax, action_factory);
+  // XFEMApp::associateSyntax(syntax, action_factory);
+  // TensorMechanicsApp::associateSyntax(syntax, action_factory);
+  // SolidMechanicsApp::associateSyntax(syntax, action_factory);
+  CombinedApp::associateSyntax(syntax, action_factory);
+    //Registry::registerActionsTo(action_factory, {"NFSApp"});
 
 }
 
@@ -100,6 +119,9 @@ void
 NFSApp::associateSyntaxDepends(Syntax & /*syntax*/, ActionFactory & /*action_factory*/)
 {
 }
+
+
+
 
 /***************************************************************************************************
  *********************** Dynamic Library Entry Points - DO NOT MODIFY ******************************
