@@ -1,10 +1,9 @@
 [Tests]
   [./simple_diff]
-    type = 'Exodiff'
+    type = 'Exodiff' # testing exodus file for differences
     input = 'simple_diffusion.i'
     exodiff = 'simple_diffusion_out.e'
   [../]
-
   [./simple_tran]
     type = 'Exodiff'
     input = 'tran_heat_conduction.i'

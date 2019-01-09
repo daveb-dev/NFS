@@ -6,7 +6,7 @@
 []
 
 [Mesh]
-  file = unstructure_6.e
+  file = unstructured3.e
   displacements = 'disp_x disp_y'
   #uniform_refine = 1
 []
@@ -29,8 +29,8 @@
     point2 = '0, 0, 1'
     #average = false
     average = true
-    threshold = 1.5e8 #1.3e8
-    initiate_on_boundary = 8
+    threshold = 1.5e8  #1.5e8 #1.3e8
+    initiate_on_boundary = 1
     random_range = 0.1
     #weibull = xfem_weibull
     use_weibull = true
@@ -59,7 +59,7 @@
   [./xfem_max_hoop_stress]
     type = XFEMMaxHoopStress
     execute_on = timestep_end
-    block = pellet_type_1
+    block = 1
     disp_x = disp_x
     disp_y = disp_y
     temp = temp
@@ -92,78 +92,100 @@
   [./temp]
     initial_condition = 300.0     # set initial temp to ambient
   [../]
+
 []
 
 [AuxVariables]
+
   [./xfem_volfrac]
     order = CONSTANT
     family = MONOMIAL
   [../]
+
   [./xfem_marker]
     order = CONSTANT
     family = MONOMIAL
   [../]
+
   [./xfem_cut_origin_x]
     order = CONSTANT
     family = MONOMIAL
   [../]
+
   [./xfem_cut_origin_y]
     order = CONSTANT
     family = MONOMIAL
   [../]
+
   [./xfem_cut_origin_z]
     order = CONSTANT
     family = MONOMIAL
   [../]
+
   [./xfem_cut_normal_x]
     order = CONSTANT
     family = MONOMIAL
   [../]
+
   [./xfem_cut_normal_y]
     order = CONSTANT
     family = MONOMIAL
   [../]
+
   [./xfem_cut_normal_z]
     order = CONSTANT
     family = MONOMIAL
   [../]
+
   [./xfem_threshold]
     order = CONSTANT
     family = MONOMIAL
   [../]
+
   [./stress_xx]      # stress aux variables are defined for output; this is a way to get integration point variables to the output file
     order = CONSTANT
     family = MONOMIAL
   [../]
+
   [./stress_yy]
     order = CONSTANT
     family = MONOMIAL
   [../]
+
   [./stress_zz]
     order = CONSTANT
     family = MONOMIAL
   [../]
+
   [./hoop]
     order = CONSTANT
     family = MONOMIAL
   [../]
+
   [./radial]
     order = CONSTANT
     family = MONOMIAL
   [../]
+
   [./axial]
     order = CONSTANT
     family = MONOMIAL
   [../]
+
   [./vonmises]
     order = CONSTANT
     family = MONOMIAL
   [../]
+
   [./weibull]
     order = CONSTANT
     family = MONOMIAL
   [../]
 
+  [./burnup]
+    order = CONSTANT
+    family = MONOMIAL
+  [../]
 []
 
 [Functions]
@@ -343,15 +365,15 @@
     variable = temp
   [../]
 
-#  [./heat_ie]       # time term in heat conduction equation
-#    type = HeatConductionTimeDerivative
-#    variable = temp
-#  [../]
+ [./heat_ie]       # time term in heat conduction equation
+   type = HeatConductionTimeDerivative
+   variable = temp
+ [../]
 
   [./heat_source]  # source term in heat conduction equation
      type = HeatSource
      variable = temp
-     block = pellet_type_1
+     block = 1
      function = power_history
   [../]
 []
@@ -436,55 +458,54 @@
 
 [BCs]
 # Define boundary conditions
-
   [./no_x_center]
     type = DirichletBC
     variable = disp_x
-    boundary = 17
+    boundary = 15
     value = 0.0
   [../]
 
   [./no_y_center]
     type = DirichletBC
     variable = disp_y
-    boundary = 17
+    boundary = 15
     value = 0.0
   [../]
 
-#  [./no_x]
-#    type = DirichletBC
-#    variable = disp_x
-#    boundary = 19
-#    value = 0.0
-#  [../]
+  # [./no_x]
+  #  type = DirichletBC
+  #  variable = disp_x
+  #  boundary = 16
+  #  value = 0.0
+  # [../]
 
   [./no_y]
     type = DirichletBC
     variable = disp_y
-    boundary = 18
+    boundary = 16
     value = 0.0
   [../]
 
   [./pellet_outer_temp]
     type = FunctionPresetBC
     variable = temp
-    boundary = 8
+    boundary = 1
     function = temp_or
   [../]
 []
 
 [Materials]
-  [./fuel_thermal]
-    type = HeatConductionMaterial
-    block = pellet_type_1
-    temp = temp
-    thermal_conductivity = 5.0
-    specific_heat = 1.0
-  [../]
+#  [./fuel_thermal]
+#    type = HeatConductionMaterial
+#    block = 1
+#    temp = temp
+#    thermal_conductivity = 5.0
+#    specific_heat = 1.0
+#  [../]
 
   [./fuel_elastic]
     type = Elastic
-    block = pellet_type_1
+    block = 1
     temp = temp
     youngs_modulus = 2.e11
     poissons_ratio = .345
@@ -495,23 +516,32 @@
 
   [./fuel_density]
     type = Density
-    block = pellet_type_1
-    density = 10431.0
+    block = 1
+    density = 10970.0 #kg/m3
   [../]
-#  [./fuel_thermalU3Si]
-#        type = ThermalSilicideFuel
-#        block = pellet_type_1
-#        temp = temp
-#        silicon_mole_fraction = 0.25
-#        specific_heat_model = WHITE
-#        thermal_conductivity_model = ZHANG
-#  [../]
+
+  [./fuel_oxide]
+        type = ThermalFuel
+        block = 1
+        temp = temp
+        burnup = burnup
+        model = 3
+  [../]
+  # [./fuel_thermalU3Si]
+  #       type = ThermalSilicideFuel
+  #       block = 1
+  #       temp = temp
+  #       silicon_mole_fraction = 0.25
+  #       specific_heat_model = WHITE
+  #       thermal_conductivity_model = ZHANG
+  # [../]
+
   [./weilbull]
     type = XFEMWeibullMaterial
     weibull_modulus = 15
     specimen_volume = 5.281e-5 #5.281e-5 # 7.6977e-05
     specimen_material_property = 1.0
-    block = pellet_type_1
+    block = 1
   [../]
 []
 
@@ -586,7 +616,7 @@
 
 [Outputs]
   # Define output file(s)
-  file_base = randomized_fracture_with_visibe_fractures
+  file_base = 3_oxide_test
   interval = 1
   exodus = true
   csv = true

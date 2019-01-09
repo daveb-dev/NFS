@@ -24,6 +24,7 @@
 
 // Materials
 #include "ExampleMaterial.h"
+#include "example_material2.h"
 
 
 template <>
@@ -76,7 +77,7 @@ NFSApp::registerObjects(Factory & factory)
 
   // Materials
   registerMaterial(ExampleMaterial);
-
+  registerMaterial(example_material2);
   // Bison Register
 //  #ifdef BISON_ENABLED
     BisonApp::registerObjects(factory);

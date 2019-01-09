@@ -13,8 +13,9 @@ For more information see: [http://mooseframework.org/create-an-app/](http://moos
 ## Building
 Make sure to change the `MOOSE_DIR` into the correct moose directory, located in the Makefile
 
-`make`
-<br />
+```bash
+make
+```
 
 
 ## Running Test

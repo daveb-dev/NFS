@@ -1,8 +1,3 @@
-[GlobalParams]
-  order = FIRST
-  family = LAGRANGE
-[]
-
 [Mesh]
   type = GeneratedMesh
   dim = 2
@@ -12,7 +7,7 @@
   xmax = 600
   ymin = 0
   ymax = 600
-  elem_type = QUAD8
+  elem_type = QUAD4
 []
 
 
@@ -25,9 +20,9 @@
 []
 
 [AuxVariables]
-  [./Wei_strength]
-    order = FIRST
-    family = LAGRANGE
+  [./weistrength]
+    order = CONSTANT
+    family = MONOMIAL
   [../]
 []
 
@@ -35,8 +30,9 @@
 [AuxKernels]
   [./Wei_Aux]
     type = MaterialRealAux
-    property = "WeibullMat"
-    variable = "Wei_strength"
+    property = weibull
+    variable = weistrength
+    execute_on = 'initial linear'
   [../]
 []
 
@@ -44,7 +40,6 @@
   [./diff]
   type = Diffusion
   variable = T
-  block = 0
   [../]
 []
 
@@ -52,25 +47,24 @@
 [BCs]
   [./outside]
     type = PresetBC
-    boundary = 0
+    boundary = 2
     variable = T
     value = 300 # Outside temperature set at 300K
   [../]
   [./Inside]
     type = PresetBC
-    boundary = 1
+    boundary = 3
     variable = T
     value = 1400 # Inside temperature set at 300K
   [../]
 []
 
 [Materials]
-  [./property]
-    block = 0
+  [./weiproperty]
     type = XFEMWeibullMaterial
-    weibull_modulus = 10
-    specimen_material_property = 100e3
-    specimen_volume = 0.001
+    weibull_modulus = 5
+    specimen_material_property = 100e6
+    specimen_volume = 0.1
   [../]
 []
 

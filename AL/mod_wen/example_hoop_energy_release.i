@@ -35,17 +35,17 @@
     #weibull = xfem_weibull
     use_weibull = true
   [../]
-#  [./xfem_mean_stress]
-#    type = XFEMMeanStress
-#    tensor = stress
-#    quantity = MaxPrincipal
-#    execute_on = timestep_end
-#    critical_stress = 1.0 #1.3e8
-#    use_weibull = true
-#    radius = 0.0002
-#    weibull_radius = 0.0002
-#    average_h = h
-#  [../]
+ [./xfem_mean_stress]
+   type = XFEMMeanStress
+   tensor = stress
+   quantity = MaxPrincipal
+   execute_on = timestep_end
+   critical_stress = 1.0 #1.3e8
+   use_weibull = true
+   radius = 0.0002
+   weibull_radius = 0.0002
+   average_h = h
+ [../]
   # [./xfem_energy_release_rate]
   #   type = XFEMEnergyReleaseRate
   #   execute_on = timestep_end
@@ -498,14 +498,7 @@
     block = pellet_type_1
     density = 10431.0
   [../]
-#  [./fuel_thermalU3Si]
-#        type = ThermalSilicideFuel
-#        block = pellet_type_1
-#        temp = temp
-#        silicon_mole_fraction = 0.25
-#        specific_heat_model = WHITE
-#        thermal_conductivity_model = ZHANG
-#  [../]
+
   [./weilbull]
     type = XFEMWeibullMaterial
     weibull_modulus = 15
@@ -554,7 +547,7 @@
   start_time = 0.0
   dt = 1.0e2
   end_time = 1.5e4
-  num_steps = 5000
+  num_steps = 200
 
   dtmin = 1.0e2
 
@@ -574,22 +567,13 @@
     type = AverageElementSize
     variable = temp
   [../]
-  [./hoop_stress]
-    type = ElementAverageValue
-    variable = hoop
-  [../]
-  [./vonmises]
-    type = ElementAverageValue
-    variable = vonmises
-  [../]
 []
 
 [Outputs]
   # Define output file(s)
-  file_base = randomized_fracture_with_visibe_fractures
+  file_base = crack_prop_new_refine_out
   interval = 1
   exodus = true
-  csv = true
   [./console]
     type = Console
     perf_log = true
