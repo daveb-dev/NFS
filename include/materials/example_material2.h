@@ -8,9 +8,7 @@ class example_material2;
 template<>
 InputParameters validParams<example_material2>();
 
-/**
- *
- */
+// Inherit Classes from Material objects
 class example_material2 : public Material
 {
 public:
@@ -21,6 +19,7 @@ protected:
 
 private:
   MaterialProperty<Real> &_diff;
+  MaterialProperty<Real> &_density;
 };
 
 #endif //EXAMPLE_MATERIAL2_H
