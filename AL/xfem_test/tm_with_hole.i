@@ -1,10 +1,18 @@
+#####################
+# NAME: Tensor Mechanics with hole in the middle
+#
+#
+#
+#####################
+
+# allocate global parameters
 [GlobalParams]
   displacements = 'disp_x disp_y'
   order = FIRST
   family = LAGRANGE
 []
 
-
+# uses the mesh created
 [Mesh]
   file = circle_with_hole_model1.e
   displacements = 'disp_x disp_y'
@@ -12,6 +20,7 @@
   boundary_name = 'Bottom Right Top Left'
 []
 
+# variables for x and y displacements
 [Variables]
   [./disp_x]
   [../]
@@ -19,6 +28,8 @@
   [../]
 []
 
+# Master action for TM, where strain is small compare to the stress, and
+# automatically adding variables.
 [Modules/TensorMechanics/Master]
   [./block1]
     strain = SMALL
@@ -27,8 +38,8 @@
   [../]
 []
 
-[BCs]
 # Define boundary conditions
+[BCs]
   [./bottom]
     type = DirichletBC
     variable = disp_y
@@ -49,6 +60,9 @@
   [../]
 []
 
+# Material vectors for elasticity and stress
+# tensors, which it supples the elasticity tensors and
+# linear stress using stress recovery
 [Materials]
   [./elasticity_tensor]
     type = ComputeIsotropicElasticityTensor
@@ -62,9 +76,7 @@
 []
 
 [Executioner]
-
   type = Transient
-
   solve_type = 'PJFNK'
 
   # petsc_options = '-snes_ksp_ew'
@@ -73,7 +85,6 @@
 
   petsc_options_iname = '-pc_type -pc_factor_mat_solver_package'
   petsc_options_value = 'lu superlu_dist'
-
   line_search = 'none'
 
 #  [./Quadrature]
@@ -94,7 +105,7 @@
   num_steps = 20
 
   dtmin = 1.0e2
-
+  # Max xfem updated, not needed.
   max_xfem_update = 1
 []
 

@@ -1,3 +1,11 @@
+#####################
+# NAME: Solid Mechanics with hole in the middle
+#
+#
+#
+#####################
+
+# Global Params
 [GlobalParams]
   disp_x = disp_x
   disp_y = disp_y
@@ -5,10 +13,12 @@
   family = LAGRANGE
 []
 
+# FE problems
 [Problem]
   type = FEProblem
 []
 
+# Input Mesh
 [Mesh]
   file = circle_with_hole_model1.e
   displacements = 'disp_x disp_y'
