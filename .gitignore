@@ -95,7 +95,7 @@ compile_commands.json
 !**/gold/*.pvtu
 
 # Allow files in mesh folder
-!*/mesh/*.e
+!**/mesh/*.e
 
 peacock_run_tmp.i
 yaml_dump*
