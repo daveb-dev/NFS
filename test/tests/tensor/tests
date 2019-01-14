@@ -1,0 +1,7 @@
+[Tests]
+  [./tensor_mechanics]
+    type = 'Exodiff'
+    input = 'tensor_mechanics.i'
+    exodiff = 'tensor_mechanics_out.e'
+  [../]
+[]
