@@ -39,10 +39,10 @@
   dim = 2
   xmin = 0
   xmax = 10.0
-  nx = 50
+  nx = 20
   ymin = 0
   ymax = 10.0
-  ny = 50
+  ny = 20
   displacements = 'disp_x disp_y'
   boundary_id = '0 1 2 3'
   boundary_name = 'Bottom Right Top Left'
@@ -130,11 +130,11 @@
   start_time = 0.0
   dt = 1.0
   #end_time = 1.5e4
-  num_steps = 20
+  num_steps = 2
 
   #dtmin = 1.0e2
   # Max xfem updated, not needed.
-  max_xfem_update = 1
+  max_xfem_update = 0
 []
 
 [Postprocessors]
