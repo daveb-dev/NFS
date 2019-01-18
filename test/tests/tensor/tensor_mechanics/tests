@@ -1,0 +1,12 @@
+[Tests]
+  [./tensor_mechanics_basic]
+    type = 'Exodiff'
+    input = 'tensor_mechanics.i'
+    exodiff = 'tensor_mechanics_out.e'
+  [../]
+  [./xfem_linear_station_fracture_test]
+    type = 'Exodiff'
+    input = 'xfem_fracture.i'
+    exodiff = 'xfem_fracture.e'
+  [../]
+[]
