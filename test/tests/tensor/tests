@@ -1,7 +1,22 @@
 [Tests]
-  [./tensor_mechanics]
+  [./tensor_mechanics_basic]
     type = 'Exodiff'
     input = 'tensor_mechanics.i'
     exodiff = 'tensor_mechanics_out.e'
+  [../]
+  [./xfem_linear_station_fracture_test]
+    type = 'Exodiff'
+    input = 'xfem_fracture.i'
+    exodiff = 'xfem_fracture.e'
+  [../]
+  [./tensor_circle_x]
+    type = 'Exodiff'
+    input = 'tm_with_hole_x.i'
+    exodiff = 'tm_with_hole_x_out.e'
+  [../]
+  [./tensor_circle_y]
+    type = 'Exodiff'
+    input = 'tm_with_hole_y.i'
+    exodiff = 'tm_with_hole_y_out.e'
   [../]
 []
