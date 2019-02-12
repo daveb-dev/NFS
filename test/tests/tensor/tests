@@ -19,4 +19,9 @@
     input = 'tm_with_hole_y.i'
     exodiff = 'tm_with_hole_y_out.e'
   [../]
+  [./linear_fracture]
+    type = 'Exodiff'
+    input = 'linear_stress_test.i'
+    exodiff = 'linear_stress_test_out.e'
+  [../]
 []
